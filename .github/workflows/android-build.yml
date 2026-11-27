@@ -35,7 +35,7 @@ jobs:
         run: sdkmanager "platforms;android-35" "build-tools;35.0.0"
 
       - name: Ekstrak proyek
-        run: unzip -o SudutPandangStudioV1_Prototipe.zip -d .
+        run: unzip -o SudutPandangStudio_update_topik.zip -d .
 
       - name: Perbaiki target Java dan Kotlin
         run: |
