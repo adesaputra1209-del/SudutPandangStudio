@@ -37,10 +37,36 @@ jobs:
       - name: Ekstrak proyek
         run: unzip -o SudutPandangStudioV1_Prototipe.zip -d .
 
-      - name: Periksa file proyek
+      - name: Perbaiki target Java dan Kotlin
         run: |
-          ls -la
-          ls -la app
+          cat > app/build.gradle.kts <<'EOF'
+          plugins {
+              id("com.android.application")
+              id("org.jetbrains.kotlin.android")
+          }
+
+          android {
+              namespace = "id.sudutpandang.studio"
+              compileSdk = 35
+
+              defaultConfig {
+                  applicationId = "id.sudutpandang.studio"
+                  minSdk = 28
+                  targetSdk = 28
+                  versionCode = 1
+                  versionName = "1.0-prototype"
+              }
+
+              compileOptions {
+                  sourceCompatibility = JavaVersion.VERSION_17
+                  targetCompatibility = JavaVersion.VERSION_17
+              }
+
+              kotlinOptions {
+                  jvmTarget = "17"
+              }
+          }
+          EOF
 
       - name: Bangun APK
         run: gradle --no-daemon assembleDebug
@@ -50,4 +76,3 @@ jobs:
         with:
           name: Sudut-Pandang-Studio-APK
           path: app/build/outputs/apk/debug/*.apk
-          
